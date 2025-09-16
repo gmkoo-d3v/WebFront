@@ -55,3 +55,6 @@ local.properties
 **/*.jks
 config.properties
 application-local.yml
+
+**/MANIFEST.MF
+**/META-INF/MANIFEST.MF
