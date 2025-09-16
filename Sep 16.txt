@@ -1,0 +1,32 @@
+web server 
+web application server
+
+web server 의 대표적인것 nginx 
+  로드벨런싱 같은거 해줌 
+  컴파일되고 실행되는것은 못해줌
+
+웹페이지가 html css javascript로만되있으면 web application server 굳이 필요없다 -> 클라이언트 브라우저
+
+웹서버의 역활 -> 그냥 html 가지고 있다가 요청들어오면 던저주는것
+-> 클라이언트 브라우저가 해석함
+
+아파치만 깔면 정적
+톰캣은 동적
+
+아파치와 톰캣을 설치한다는걸 아파치톰켓
+
+was를 한다면 아파치 톰캣이나 유료서비스
+
+정적서버 웹서버 역활만 필요하면 
+apache nginx
+
+동적 was 역활이 필요하면 
+tomcat
+
+
+was 여러웹클라이언트 요구를 웹서버가 감당할수 없는 기능을 구조적으로 웹섭버와 분리하기 위해 만들어진것
+서버 디비연결 데이터 조작등의 처리 함
+
+톰캣 bin들가서 startup.bat shutdonw.bat
+
+11
