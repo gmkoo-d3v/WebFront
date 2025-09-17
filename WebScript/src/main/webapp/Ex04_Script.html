@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript">
+        let name = "hong";  //global variabale
+
+        function call(){
+            let age=20; // local variable
+            console.log("당신의 이름은: "+ name + "나이는 :"+ age);
+        }
+        /* 
+            1. 변수 생성  > 값 입력 > 타입 생성 ( number , string , date)
+            var a;
+            let b;
+
+            a = 10 ;  타입 생성
+            b = "A";  타입 생성
+            b = 'A' ;
+
+            ES5 문법 (var 전역 (페이지 전체), 지역(함수))
+            ES6 문법 (ECMA) : 2015  >  let , const 
+
+            현재 : var , let , const
+            권장 : let , const
+            
+            초기화 (변수 처음 값을 갖는 것)
+            javascript (정수, 실수 , boolean , 문자열)
+            내부적으로 가지는 타입 : number , boolean, Array , Object , string 등등
+
+            변수 (scope)
+                1.  현재 페이지 기준 : EX04_Script.html
+                    
+                    let date = 100; 자바스크립트에서는 global 변수라 한다. 전역 변수
+                    페이지 전체에서 사용가능
+                    function call() {let age = 20; } : local( 지역 변수 )
+
+                         
+        */
+       let n;
+       console.log(n); // undefined
+       // 사용전에 초기화 하면된다.
+        n = 100; // global variable 함수안에 안들어 있으니까
+        let i,j;
+        i = 100;
+        j = 200;
+        const result = i + j;
+        console.log(result); 
+
+        let intnum = 10; // 정수 number
+        let dnum = 12.345; // 실수 number
+        let flag = true; // boolean
+        let str = null; // 값이 없다 (Object)
+        let str2 = "ABC"; // 문자열 string
+
+        console.log(typeof(intnum));
+        console.log(typeof(dnum));
+        console.log(typeof(flag));
+        console.log(typeof(str));
+        console.log(typeof(str2));
+
+        // javascript 연산자
+        // 산술 , 논리 ,관계
+        let num1 = 10;
+        let num2 = 3;
+        document.write((num1/num2)+"<br>");
+        document.write((num1%num2)+"<br>");
+
+        // 관계 연산
+        // == 값이 같으면 ( === 값도 같고 타입도 같아야된다)
+        let a = 3;
+        let b = 5;
+        console.log((a == b)); // false
+        console.log((a !== b)); // true
+        console.log((a > b)); // false
+        
+        // 논리
+        console.log((10>5) && (1 !=3)); // true
+        console.log((10<5) || (1 !=3)); // true
+       
+        // 삼항연산자
+
+        let result2 = (4%2 == 0) ? "짝수" : "홀수" ;
+        console.log(result2);
+
+        // 대입연산자 (+= , -+ , *=, -=)
+            let p = 10;
+            let k = 5;
+            p += k; // p= p+k;
+            console.log(p);
+
+            let x = 5 + 5;
+            let y = "5" + 5 ; // 산수 , 결합
+            let z =  5 +"5" ; // 산수 , 결합
+            console.log(x); //10
+            console.log(y); //55 
+            console.log(typeof(y)); //string
+            console.log(typeof(z)); //string
+
+            let v= "5";
+            let v2 = 5;
+            let v3 = 5;
+
+            console.log(v == v2);  //t 값을 비교
+            console.log(v === v2); //f POIN 값도 같고 타입 동일
+            console.log(v2 == v3); // t
+            console.log(v2 === v3); //t
+
+
+        
+    </script>
+</head>
+<body>
+    <button onclick="call()">클릭</button>
+</body>
+</html>
