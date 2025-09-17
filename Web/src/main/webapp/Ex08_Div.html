@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Div 영역을 정의하는 태그(UI 전체를)</title>
+</head>
+<body>
+ <div style="width:100px; height: 100px; background-color:yellow;""></div>
+ <div style="width:100px; height: 100px; background-color:red;""></div>
+ <div style="width:100px; height: 100px; background-color:blue;""></div>
+   <!-- 밑으로 떨어진다 -->
+<hr>
+ <div style="width:100px; height: 100px; background-color:yellow; float:left"></div>
+ <div style="width:100px; height: 100px; background-color:red;"></div>
+ <div style="width:100px; height: 100px; background-color:blue;"></div>
+ <!-- 노란색이 위로 떠서 빨간색칸 위로 올라가서 노 파만 보임 -->
+<hr>
+ <div style="width:100px; height: 100px; background-color:yellow; float:left"></div>
+ <div style="width:120px; height: 100px; background-color:red;"></div>
+ <div style="width:100px; height: 100px; background-color:blue;"></div>
+ <hr>
+ <div style="width:100px; height: 100px; background-color:yellow; float:left"></div>
+ <div style="width:100px; height: 100px; background-color:red; float:left"></div>
+ <div style="width:100px; height: 100px; background-color:blue;"></div>
+ <!-- 이러면 블루가 숨게된다  -->
+<hr>
+ <div style="width:100px; height: 100px; background-color:yellow; float:left"></div>
+ <div style="width:100px; height: 100px; background-color:red; float:left"></div>
+ <div style="width:220px; height: 100px; background-color:blue;"></div>
+
+<hr>
+ <div style="width:100px; height: 100px; background-color:yellow; float:left"></div>
+ <div style="width:100px; height: 100px; background-color:red; float:left"></div>
+ <div style="width:100px; height: 100px; background-color:blue; float:left"></div>
+ <hr>
+ <div style="width:100px; height: 100px; background-color:yellow; float:right"></div>
+ <div style="width:100px; height: 100px; background-color:red; float:right"></div>
+ <div style="width:100px; height: 100px; background-color:blue; float:right"></div>
+
+ 
+</body>
+</html>

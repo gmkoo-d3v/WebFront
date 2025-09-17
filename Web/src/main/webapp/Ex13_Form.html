@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 
+    개발자 필수 태그
+    
+    메모장 : 회원가입 태그, 로그인 태그
+    -->
+    <form action="Ex13_ok.jsp" method="get">
+        ID : <input type="text" name="userid"><br>
+        PWD : <input type="password" name="userpwd"><br>
+        <input type="submit" value="전송">
+        <!-- 출발 -->
+        <input type="reset" value="초기화">
+        <!-- 보낸걸 초기화 -->
+    </form>
+    <!--
+     form 태그는 전송을 담당하는 태그 
+     클라이언트가 입력한 데이터를 가지고 목적지 배송
+
+    1. action ="" 목적지 주소 >> JSP >> action = "Ex13_ok.jsp"
+                              >> servlet >> action = "Ex13_ok.do"
+
+
+    2. method = "post"  비행기    Ex13_ok.jsp (http 내부 header 안에 숨겨서 가져감)
+       method = "get"     배     Ex13_ok.jsp?userid=hong&userpwd=1004 이런식으로 웹브라우저 주소창에 노출된다. (보안상 안좋음)
+        
+       어떤 상황은 배 만 타야되는 경우
+       link
+       <a hreft="boardDetail.jsp?no=100">100번</a> 이런건 form 태그 못쓴다.
+       http://localhost:8090/Web/Ex13_ok.jsp?userid=hong&userpwd=1004
+
+     form 운송수단
+     비행기
+     배
+
+     동기식 get , post
+     비동기식 : REST 방식 : get, post, put, delete (의미부여)
+
+     POINT 
+     운송수단
+     선장님
+     1. <input type="submit" value="전송">
+     2. <input type="button" onclick="call()"> submit()  >> 
+        2.1 function call() {document.form.submit();}
+        굳이 태그를 input 대신 img 를 할려고한다면 위와 동일
+        <img src="images/xxx.jpg" alt="대체텍스트" width="100px" height="150px" onclick=call()">submit()
+
+     3. <input type="image" src="images/xxx.jpg alt = "전송버튼" width="" height=""> 내부적으로 submit을 가지고 있다
+
+     -->
+
+
+
+</body>
+</html>
