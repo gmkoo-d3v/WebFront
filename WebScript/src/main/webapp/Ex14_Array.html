@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	<script type="text/javascript">
+		/* 
+		   배열(Array)
+		   JAVA : Array(정적): 장점으로 배열 크기 고정 Collection(동적) : 장점으로 다양한 클래스 제공 자바는 정적과 동적을 엄격히 구분
+			   int[] arr = new int[3]
+			   int[] arr2 = new int[]{1,2,3}
+			   int[] arr3 = {1,2,3,4} //KEY POINT 컴파일러한테 new 짬처리
+			   
+			   List<String> list = new ArrayList<>();
+			   list.add("A");
+		  	   list.add("B");
+		   ------------------------------------------------------------------------------
+		   
+		   javascript >> 정적 동적구분안됨 >> 정적 + 동적 >> 동적배열이다 (자료구조 : stack)
+			   let arr = [];
+			   데이터 넣을때
+			   arr.push();
+			   데이터 뺄때
+			   arr.pop();
+		   
+		   
+		   
+		*/
+			let arr = [10,20,30];
+			for(let i =0; i <arr.length ; i++) {
+				document.write(arr[i] + "<br>");
+			}
+			
+			//Best (좋은 냄새가 나는 코드)
+			
+					//let arr = [];
+			
+			//Bad (나쁜 냄새가 나는 코드)
+		
+					//let eng = new Array(3); 이유 인덱슨지 배열인지 혼동오기 때문에
+					//let array = new Array(5); bad
+					//let array2 = new Array(1,2,3) bad
+			
+					
+			let arr2 = [];
+			arr2.push(10);
+			arr2.push(20);
+			// 배열에 숫자집어넣고난담에 string 문자열도 집어 넣을 수 있다.
+			document.write(arr2.pop());
+					
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

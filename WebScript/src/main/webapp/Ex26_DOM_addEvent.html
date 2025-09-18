@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script type="text/javascript">
+		/* 
+		https://www.w3schools.com/js/js_htmldom_eventlistener.asp
+		
+		element.addEventListener(event, function, useCapture);
+	    element.addEventListener("click", function(){ alert("Hello World!"); });
+	    
+	    1. document.getElementById("myBtn").addEventListener("click",displayDate);
+	    
+	    2. 하나의 요소에 여러개의 이벤트를 걸수도 있고  , 필요없다면 이벤트를 제거할 수 도 있다
+	    2.1 addEventListener 
+	    2.2 제거 removeEventListener
+		*/
+	</script>
+</head>
+<body>
+	<button id="myBtn">Try it</button>
+	<p id="demo"></p>
+	
+</body>
+<script type="text/javascript">
+	document.getElementById("myBtn").addEventListener("click",displayDate);
+	
+	function displayDate(){
+		document.getElementById("demo").innerHTML = new Date();
+	}
+</script>
+</html>

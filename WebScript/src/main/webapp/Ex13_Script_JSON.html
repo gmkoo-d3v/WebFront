@@ -13,14 +13,18 @@
 			자바 설계도(클래스) => 재사용성
 			class Product extends Object{
 					private String carname="pony";
+					
 					public Product(){}
+					
 					public Product(String carname){
 						this.carname= carname;
 					}
+					
 					public void print(){
 						System.out.println(this.carname);
 					}
 			}
+			
 		​	메모리 load ... (new)
 			Product p = new Product();
 			Product p2 = new Product("pony2");
@@ -126,7 +130,7 @@
 			1.오브젝트 리터럴 방식 (객체를 만드는 방법): 클래스 생성과 동시에 객체가 만들어 져요
 			1.1 리터럴 방식 >> 제일 간단한 방법 > var obj = {}; //var objarr = [] 배열 
 			1.2 JSON 표기 : {} >> JSON: JavaScript Object Notation
-
+            객체를 가진 변수  =  객체들
 			ex) var myObj = { "name":"John", "age":31, "city":"New York" };
 
 			TIP) JSON >> XML (텍스트 기반의 형식화된 문서 제공)
@@ -161,6 +165,31 @@
 			단점 : 객체 하나 생성(재사용성 없다) 
 			접근방법 : 인스턴스이름.자원 >> product2.제품명 
 			*/	
+			let member = {}; //객체 생성 java 식으로 Car car = new Car();
+			
+			Member.name = "hong"; //이객체에 name필드 추가한거
+			console.log(Member);
+			
+			Member.age = 100;
+			
+			// 함수추가
+			Member.print = function(){
+				document.write("<br>"+this.name + "/" +this.age +"<br>");
+			}
+			
+			Member.print();
+			
+			let Grade = { //멤버필드가 다시 객체를 값으로 가질수 있다. property 가 가지는 값
+					"list":{"hong":10 ,"kim":20 , "park":30},
+					"show":function(){
+						for(let key in this.list){
+							document.write(key + ":" + this.list[key] + "<br>");
+						}
+					}
+			}
+			Grade.show();
+		// xml 또는 JSON 은 이기종 간의 데이터 교환 목적이다.
+		// xml 또는 JSON 데이터로 데이터를 담아서 처리하는 목적으로 사용된다.
     </script>
 </head>
 <body>

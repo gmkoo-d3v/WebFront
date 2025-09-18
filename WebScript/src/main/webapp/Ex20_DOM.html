@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<style type="text/css">
+		.democlass {color: red;}
+	</style>
+</head>
+<body>
+	<div id="div">
+		<h1 class="democlass">Hello world_1</h1>
+		<h1 class="democlass">Hello world_2</h1>
+		<h1 class="democlass">Hello world_3</h1>
+	</div>
+	
+</body>
+	<script type="text/javascript">
+		//document.getElementsByTagName("h1")[0].removeAttribute('class');
+		// 나는 0번째껄 가져와서 속성을 없애겠다.
+		/*
+		let harray = document.getElementsByTagName("h1");
+		console.log(harray); //배열
+		
+		for(let i = 0 ; i < harray.length ;i++){
+			console.log(harray.length);
+			harray[i].removeAttribute('class');
+		}
+		*/
+		/*
+		let array = document.getElementsByTagName("h1");
+		for(let index in array){
+			document.getElementById("div").removeChild(array[index]);
+		} //h1 태그가져와서 포문에서 그 어레이의 크기만큼 for문을 돌릴꺼임 div를 가져와서 어래이의 에 배정된것을 순차적으로 지울것이다 가 의도
+		// 3개다 안지우고 hello world_2만남음
+		// 0번째 지워짐 남은 거 1 2 가 0 1 이됨
+		// 카운터는 1로 올라가니 0 1중 0은 남고 1을 지움 그래서 0은 계속남음
+		// 카운터 2 올라가지만 비었으니 종료됨 index out of range
+		// 자바스크립트의 배열은 동적이니 벌어지는 현상
+		이게 동적배열의 특징
+		*/
+		/*
+		삭제순서 0 -> 1 -> 2
+		Hello World_2 남아있네
+	
+		[0]                [1]                   [2]
+		Hello world_1      Hello world_2         Hello world_3
+		
+		삭제[0] 동적배열 (ArrayList)
+		
+		[0]                [1]
+		Hello world_2      Hello world_3
+		
+		삭제[1] 삭제
+		[0]                
+		Hello world_2   
+		
+		//모든 지워지게 수정
+		
+		
+		[0][1][2]  >> [2]삭제
+		[0][1]     >> [1]삭제
+		[0]        >> [0]삭제
+	
+		[2] -> [1] -> [0]	
+	*/
+		/*
+		let arr = document.getElementsByTagName("h1");
+		let len = arr.length;//3
+		for(let i = 0 ; i < len ; i++){ //3번 반복
+		//remove()
+		arr[arr.length-1].remove();
+		}
+		*/
+		const parent = document.getElementById('div');
+		const list = parent.getElementsByTagName('h1'); // 이 부모의 h1만
+		for (let i = list.length - 1; i >= 0; i--) {
+			console.log("i: " +i);
+			parent.removeChild(list[i]);
+		}
+		// 뒤부터 어래이 지우는것 방식중 하나
+	</script>
+</html>
