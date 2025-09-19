@@ -1,0 +1,79 @@
+배열하나 만들어서 슬라이드안에 다 push
+
+
+
+
+
+
+
+
+
+조건                         설명                            예
+
+변수에 저장 가능       함수를 변수에 할당할 수 있음          const fn = () => {}
+
+인자로 전달 가능       함수를 다른 함수의 인자로 전달 가능    setTimeout(fn, 1000)
+
+반환값으로 사용 가능    함수가 함수를 반환할 수 있음          return () => {}
+
+자료구조에 저장 가능    배열이나 객체에 함수 저장 가능        [fn1, fn2], { sayHi: fn }
+
+자바스크립트 함수는 일급 객체!
+1. 변수에 할당
+
+const sayHello = function() {
+  console.log("Hello!");
+};
+
+sayHello(); // Hello!
+2. 함수의 인자로 전달
+
+function greet(callback) {
+  console.log("안녕하세요~");
+  callback(); // 콜백 함수 실행
+}
+
+greet(function() {
+  console.log("반가워요!");
+});
+ 3. 함수에서 함수를 반환
+
+function multiplyBy(n) {
+  return function(x) {
+    return x * n;
+  };
+}
+
+const double = multiplyBy(2);
+console.log(double(5)); // 10
+4. 객체에 함수 저장
+
+const person = {
+  name: "홍길동",
+  sayHi: function() {
+    console.log("안녕하세요!");
+  }
+};
+
+person.sayHi(); // 안녕하세요!
+자바스크립트에서 함수는 일급 객체이기 때문에:
+변수에 담을 수 있고,
+인자로 넘길 수 있고,
+리턴할 수 있고,
+데이터처럼 다룰 수 있습니다.
+
+이 특성 덕분에 자바스크립트는 콜백, 고차 함수, 함수형 프로그래밍 등을 유연하게 구현
+
+일급 객체	함수를 변수처럼 다룰 수 있는 성질
+고차 함수	함수를 매개변수로 받거나 함수를 반환하는 함수
+
+고차 함수는 함수형 프로그래밍, 콜백 함수, Promise, React의 Hook
+
+
+
+배열관련 자주 써먹는 함수
+forEach()
+
+isArray()
+
+map()

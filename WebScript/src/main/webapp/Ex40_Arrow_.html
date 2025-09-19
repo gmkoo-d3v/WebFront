@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+
+</head>
+<body>
+	<p id="demo"></p>
+	<p id="demo2"></p>
+</body>
+		<script type="text/javascript">
+	// https://www.w3schools.com/js/js_arrow_function.asp
+	// 2차 프로젝트의 함수는 화살표 함수로 해야된다.
+	
+	//일반함수
+	// function foo(){}
+	
+	//익명함수
+	let foo = function(){// 함수는 일급객체 (변수에 활용)
+		console.log("foo...");
+	}
+	
+	// 실행방법
+	foo();
+	
+	//2015 Es6 함수의 줄입 표현 (Arrow Function)
+	let bar = () => console.log("bar..");
+	// 실행방법
+	bar();
+	
+	// 매개변수 1개 , return 함수
+	let foo2 = x => x; 
+	// let foo2 = function(x) {return x;}
+	const data = foo2(100);
+	
+	let hello;
+	//hello = function(val) {return "hello" + val;}
+	// 화살표함수
+	hello = val => "hello" + val;
+	// ************************************
+	// 이해가 안가면 원 구문을 써보고 빼 봐라	
+	// ************************************
+	const v = hello(" world");
+	console.log(v);
+	
+	// 매개변수 2개 혹은 그 이상
+	// function call(a,b) or function call(a,b,c,d)
+	// let foo3 = (a,b) => {return a+b;}  // 화살표와 생략안한거 혼합해도 문제 없다 하지만 굳이 그럴필요가 없다
+	let foo3 = (a,b) => a+b;
+	const v2 = foo3(10,20);
+	console.log(v2);
+	
+	// 만약에 함수안에 여러개의 논리가 필요하다면 (if , switch ....)
+	let foo4 = (a,b) => { 
+						  let c = 100;
+						  return a+b+c;
+						}
+	// 응용
+	
+	 // 함수가 return : json 객체라면 
+	 let foo5 = () => ({a:1,b:2,c:3}); // {{}} 이렇게는 못쓴다. >> ( { } ) 이렇게 해야된다.
+	 const obj = foo5();
+	 console.log(obj);
+ 
+	 // 즉시실행함수 (암기)
+	  (
+		function(){
+			console.log("즉시 실행 함수")
+		}()	  
+	  )
+	 
+	 // onload 하자마자 이런형태로 실행하기도 한다.
+	 /*
+	 
+
+	    (
+	       ()=>	console.log("즉시 실행 함수")	
+	    )();
+
+	 
+	 https://www.w3schools.com/jsref/jsref_obj_array.asp
+	 배열에 관련된 다양한 함수
+	 forEach , isArray , map
+	 
+	 초급자 암기
+	 1. for(let 1 -=0 ; i < 10 ; i++){}
+	 2. for(let index in Array) { Array[index]}
+	 3. for(let value of Array) {value}
+	 
+	 객체(JSON)
+	 JSON {a:1 , b:2, c:3}  객체도 for문 돌릴수 있다. 돌리면 키값이 나온다.
+	 1. for(let key in Object) {Object[key]}  ex) 객체["a"] return 1  
+	 2. const obj = {a:1} >> obj.a return 1	
+	 
+	 추가적으로 
+	 1. Array.isArray()
+	 2. Array.forEach(function(value,index,array){}) //forEach가돌때 마다 재귀호출해버림  배열.foreach
+	 3. Array.map() > 새로운 배열을 생성하는데 조작() 형태의 배열을 리턴
+	 
+	 */
+	function myFunc(){
+		const data = ["A","B","C","D"];
+		let x = document.getElementById("demo2");
+		x.innerHTML = Array.isArray(data); // 너 배열이니 (true, false)
+	 }
+	 myFunc();
+	 
+	 let txt="";
+	 const numbers = [45,5,8,16,25];
+	 
+	 //Array.forEach(function(value,index,array){})
+	 
+	 function myFunc2(value, index, array){
+		txt = "(" +value + ")" + "[" + index + "]" + "[ " + array + "]" ;
+		console.log(txt);
+	 }
+	
+	 numbers.forEach(myFunc2);
+	/*
+	(45)[0] [45,5,8,16,25]
+	(5) [1] [45,5,8,16,25]
+	(8) [2] [45,5,8,16,25]
+	(16)[3] [45,5,8,16,25]
+	(25)[4] [45,5,8,16,25]
+	
+	*/
+	const number2 = [65,44,12,4];
+	const newArr = number2.map(function(value, index, array){
+		return value * 10 + index;
+	}); // 새로운 배열을 만들어서 카피까지 하겠다. 
+	// 새로운 배열 ... (가공된 value * 10 + index 적용된 배열)
+	
+	console.log(newArr); //[650,441,122,43]
+	
+	// 응용하기
+	let evens = [2,4,6,8];
+	// let odds = evens.map(function(value){return value + 1});
+	// 화살표 함수
+	odds = evens.map(value => value +1 );
+	
+	console.log(odds);
+	
+	//let nums = evens.map(function(value,index){return value +index});
+	//화살표 표현식
+	let nums = evens.map((value,index) => value+index );
+	
+	let arr =[];
+	evens.forEach(value=> {
+		if(value %2 == 0){
+			arr.push(value);
+		}
+	});
+	console.log(arr); //map() 함수 사용 권용
+	
+	</script>
+</html>
