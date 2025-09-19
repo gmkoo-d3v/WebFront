@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>영화 순위</title>
+  <!-- Bootstrap CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      padding: 30px;
+      background-color: #f8f9fa;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h3 class="text-primary">일별 영화 순위</h3>
+    <table class="table table-striped table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th>순위</th>
+          <th>영화 제목</th>
+          <th>개봉일</th>
+          <th>관객 수</th>
+        </tr>
+      </thead>
+      <tbody id="movie-table-body">
+        <!-- JavaScript로 내용 추가됨 -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    const data = {
+      boxOfficeResult: {
+        dailyBoxOfficeList: [
+          {"rank": "1", "movieNm": "파묘", "openDt": "2024-02-22", "audiCnt": "243741"},
+          {"rank": "2", "movieNm": "듄: 파트2", "openDt": "2024-02-28", "audiCnt": "44352"},
+          {"rank": "3", "movieNm": "극장판 스파이 패밀리 코드 : 화이트", "openDt": "2024-03-20", "audiCnt": "37573"},
+          {"rank": "4", "movieNm": "웡카", "openDt": "2024-01-31", "audiCnt": "15090"},
+          {"rank": "5", "movieNm": "브레드이발소: 셀럽 인 베이커리타운", "openDt": "2024-03-01", "audiCnt": "7535"},
+          {"rank": "6", "movieNm": "가여운 것들", "openDt": "2024-03-06", "audiCnt": "4732"},
+          {"rank": "7", "movieNm": "용감한 돌고래 벨루와 바닷속 친구들", "openDt": "2024-03-13", "audiCnt": "3974"},
+          {"rank": "8", "movieNm": "패스트 라이브즈", "openDt": "2024-03-06", "audiCnt": "3167"},
+          {"rank": "9", "movieNm": "나이트 스윔", "openDt": "2024-03-20", "audiCnt": "2540"},
+          {"rank": "10", "movieNm": "탐정 말로", "openDt": "2024-03-21", "audiCnt": "2438"}
+        ]
+      }
+    };
+
+    const movieList = data.boxOfficeResult.dailyBoxOfficeList;
+    const tableBody = document.getElementById('movie-table-body');
+
+    for (let i = 0; i < movieList.length; i++) {
+      const movie = movieList[i];
+      const row = document.createElement('tr');
+
+      row.innerHTML = 
+        `<td>${movie.rank}</td>
+         <td>${movie.movieNm}</td>
+         <td>${movie.openDt}</td>
+         <td>${parseInt(movie.audiCnt).toLocaleString('ko-KR')}명</td>`;
+
+      tableBody.appendChild(row);
+    }
+  </script>
+</body>
+</html>
