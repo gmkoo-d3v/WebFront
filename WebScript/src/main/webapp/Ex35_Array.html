@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	<script type="text/javascript">
+	let array = ['포도','사과'];
+	console.log(array.toString()); // Object toString() 재정의 포도,사과
+	console.log(array); // 자바랑 똑같이 예네도 나옴 (2) ['포도', '사과']
+	
+	// 출력
+	// for 3개 ( 일반 , in , of )]
+	for(let i = 0; i < array.length ;i++){
+		console.log(array[i]);
+	}
+	
+	for(let index in array){
+		console.log(array[index]);
+	}
+	
+	for(let value of array){
+		console.log(value);
+	}
+	
+	  //let array = ['포도','사과'];
+		array[2] = "바나나";
+		console.log(array.toString() + " / " + array.length);
+		
+		//['포도','사과,'바나나'];
+		//비권장
+		array[10]="애플망고"; //bad ...
+		console.log(array.toString() + " / " + array.length);
+		
+		let array2 = ["one" , "two" , "three"];
+		array2.length=2; //권장하지 않아요 
+		console.log(array2 + " / " + array2.length);
+		array2.length = 10; //사용 하지 마세요
+		
+		//권장 방법
+		//BEST
+		let array3 = [];
+		array3.push("AA");
+		array3.push("BB");
+		
+		console.log(array3.pop());
+		
+	</script>
+</head>
+<body>
+
+</body>
+</html>
