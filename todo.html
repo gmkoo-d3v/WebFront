@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo List</title>
+    <style>
+        /* 기본 스타일 초기화 및 폰트 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #f4f7f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* 전체 컨테이너 스타일 */
+.todo-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+    font-weight: 600;
+}
+
+/* 할 일 추가 폼 스타일 */
+#todo-form {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+#todo-input, .edit-input {
+    flex-grow: 1;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+}
+
+#todo-input:focus, .edit-input:focus {
+    border-color: #007bff;
+}
+
+#todo-form button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #333;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#todo-form button:hover {
+    background-color: #555;
+}
+
+/* 할 일 목록 (ul) 스타일 */
+#todo-list {
+    list-style-type: none;
+}
+
+/* 할 일 항목 (li) 스타일 */
+#todo-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 5px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+#todo-list li:last-child {
+    border-bottom: none;
+}
+
+#todo-list li .text {
+    flex-grow: 1;
+    font-size: 17px;
+}
+
+/* 기본 버튼 (수정, 삭제) */
+.btn {
+    border: none;
+    padding: 6px 12px;
+    margin-left: 5px;
+    border-radius: 5px;
+    color: #333;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.btn:hover {
+    background-color: #e0e0e0;
+}
+
+/* 수정 모드 버튼 (저장, 취소) */
+.save-btn {
+    background-color: #007bff;
+    color: white;
+}
+.save-btn:hover {
+    background-color: #0056b3;
+}
+.cancel-btn {
+    background-color: #6c757d;
+    color: white;
+}
+.cancel-btn:hover {
+    background-color: #5a6268;
+}
+    </style>
+    <script>
+        window.onload= function(){
+        // DOM 요소 가져오기
+const todoForm = document.getElementById('todo-form');
+const todoInput = document.getElementById('todo-input');
+const todoList = document.getElementById('todo-list');
+
+// 로컬 스토리지 키
+const TODOS_KEY = 'todos';
+
+// 할 일 목록 데이터 배열
+let toDos = [];
+
+// 할 일 목록을 로컬 스토리지에 저장
+function saveToDos() {
+    localStorage.setItem(TODOS_KEY, JSON.stringify(toDos));
+}
+
+// 할 일 삭제
+function deleteToDo(event) {
+    const li = event.target.closest('li');
+    const todoId = parseInt(li.dataset.id);
+    li.remove();
+    toDos = toDos.filter(toDo => toDo.id !== todoId);
+    saveToDos();
+}
+
+// 할 일 수정 모드로 전환
+function switchToEditMode(event) {
+    const li = event.target.closest('li');
+    const span = li.querySelector('.text');
+    const currentText = span.innerText;
+    
+    // li의 내용을 수정용 input과 버튼으로 교체
+    li.innerHTML = `
+        <input type="text" class="edit-input" value="${currentText}">
+        <div>
+            <button class="btn save-btn">저장</button>
+            <button class="btn cancel-btn">취소</button>
+        </div>
+    `;
+
+    li.querySelector('.edit-input').focus(); // 수정 input에 바로 포커스
+    li.querySelector('.save-btn').addEventListener('click', saveToDo);
+    li.querySelector('.cancel-btn').addEventListener('click', render); // 취소 시 전체 목록 다시 렌더링
+}
+
+// 수정 내용 저장
+function saveToDo(event) {
+    const li = event.target.closest('li');
+    const input = li.querySelector('.edit-input');
+    const todoId = parseInt(li.dataset.id);
+    const newText = input.value;
+
+    if (newText) {
+        const todo = toDos.find(toDo => toDo.id === todoId);
+        todo.text = newText;
+        saveToDos();
+    }
+    render(); // 전체 목록 다시 렌더링
+}
+
+// 화면에 할 일 목록 그리기 (전체 다시 그리기)
+function render() {
+    todoList.innerHTML = ''; // 목록 비우기
+    toDos.forEach(todo => {
+        const li = document.createElement('li');
+        li.dataset.id = todo.id;
+        li.innerHTML = `
+            <span class="text">${todo.text}</span>
+            <div>
+                <button class="btn edit-btn">수정</button>
+                <button class="btn delete-btn">삭제</button>
+            </div>
+        `;
+        todoList.appendChild(li);
+    });
+
+    // 새로 그려진 버튼들에 이벤트 리스너 추가
+    document.querySelectorAll('.edit-btn').forEach(btn => btn.addEventListener('click', switchToEditMode));
+    document.querySelectorAll('.delete-btn').forEach(btn => btn.addEventListener('click', deleteToDo));
+}
+
+// 새 할 일 추가
+function handleToDoSubmit(event) {
+    event.preventDefault();
+    const newToDoText = todoInput.value;
+    if (!newToDoText.trim()) return; // 빈 값 추가 방지
+
+    const newToDoObj = {
+        text: newToDoText,
+        id: Date.now(),
+    };
+
+    toDos.push(newToDoObj);
+    saveToDos();
+    render(); // 새 항목 추가 후 전체 목록 다시 렌더링
+    todoInput.value = "";
+}
+
+// 초기화 함수
+function init() {
+    const savedToDos = localStorage.getItem(TODOS_KEY);
+
+    if (savedToDos) {
+        toDos = JSON.parse(savedToDos);
+    } else {
+        // 저장된 데이터가 없으면 기본 항목 생성
+        toDos = [
+            { text: '아침', id: Date.now() },
+            { text: '점심', id: Date.now() + 1 },
+            { text: '저녁', id: Date.now() + 2 },
+        ];
+        saveToDos();
+    }
+    render();
+    todoForm.addEventListener('submit', handleToDoSubmit);
+}
+
+// 스크립트 시작
+init();
+        }
+    </script>
+</head>
+<body>
+
+    <div class="todo-container">
+        <h1>&#128221; ToDo List</h1>
+        
+        <form id="todo-form">
+            <input type="text" id="todo-input" placeholder="할 일을 입력하세요" autocomplete="off" required>
+            <button type="submit">추가</button>
+        </form>
+        
+        <ul id="todo-list"></ul>
+    </div>
+
+    <script src="script.js"></scrip>
+</body>
+</html>
