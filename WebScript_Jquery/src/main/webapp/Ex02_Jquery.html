@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		//window.onload = function(){//body 안에 있는 요소 가지고 놀기} 			
+		
+		$(document).ready(function(){
+			//body 안에 있는 요소 가지고 놀기
+			$('#btn').click(function(){
+				// jquery에서는 화살표함수가 문제 생길 소지가 있어서 안쓰는걸 권장
+				$(this).hide();
+					
+			});
+		});
+	</script>
+</head>
+<body>
+	<input type="button" id="btn" value="버튼">
+</body>
+</html>

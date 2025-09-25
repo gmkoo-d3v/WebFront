@@ -3,21 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-	<script type="text/javascript">
-		
-		fetch('daegufood.json')
-			.then(response => response.json())
-			.then(daegufood => {
+<script type="text/javascript">
+fetch("http://localhost:8080/프로젝트명/daegufood")  <!-- 프록시 경유 -->
+  .then(response => response.json())
+  .then(daegufood => {
+    console.log(daegufood);
+    console.log(daegufood.status);
+    console.log(daegufood.total);
+    console.log(daegufood.data[0].BZ_NM);
+  })
+  .catch(err => console.error("Fetch 실패:", err));
 
-				//console.log(daegufood);
-				console.log(daegufood.data[0]);
+
 			
-			})
-			.catch(error => {
-				console.error('error', error);
-			});
-			
-	
 	</script>
 </head>
 <body>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		
+	$(function(){
+		// jquery 이벤트 동적 처리
+		// jquery 가 가지고 있는 대부분의 함수를 parameter로 json 객체를 받는다. ( 옵션을 제어한다. )
+		
+		// 2.x.x > bind() , unbind()
+		// 3.x.x > on() , off()
+	
+		//$('p').on(function(){})
+		
+		$('p').on(
+		  {  // json 표기법  클릭은 이벤트제거하면 파란색안된다는 뜻
+			 mouseenter:function(){ $(this).css('background-color','red') },
+			 mouseleave:function(){$(this).css('background-color','green')},
+			 click:function(){$(this).css('background-color','blue')}
+		  }		
+		);
+		
+		$('button').click(function(){
+			$('p').off('click');
+		});
+	});
+	
+	</script>
+</head>
+<body>
+	<p>함수를 사용해서 다중 이벤트 처리하기</p>
+	<hr>
+	<button>이벤트 제거</button>
+</body>
+</html>

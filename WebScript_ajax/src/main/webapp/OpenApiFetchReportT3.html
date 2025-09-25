@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>혼잡도 검색</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+        }
+        #search {
+            padding: 8px;
+            width: 200px;
+        }
+        #btn {
+            padding: 8px 12px;
+            margin-left: 5px;
+        }
+        #result {
+            margin-top: 20px;
+        }
+        .item {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            background-color: #f9f9f9;
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        .item strong {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h2>공항 터미널 혼잡도 조회</h2>
+    <input type="text" id="search" placeholder="공항명을 입력하세요">
+    <input type="button" value="검색하기" id="btn">
+    <div id="result"></div>
+
+    <script type="text/javascript">
+        document.getElementById("btn").addEventListener("click", function () {
+            const query = document.getElementById("search").value.trim();
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = "";
+
+            fetch("http://apis.data.go.kr/B551177/statusOfDepartureCongestion/getDepartureCongestion?serviceKey=e9947c414a1fa8b19e81f2a374d84490304e1a5fd967db57012bb7a3975fdd20&type=json")
+                .then((response) => response.json())
+                .then((data) => {
+                    const items = data.response.body.items;
+
+                    if (!items || items.length === 0) {
+                        resultDiv.innerHTML = "<p>결과가 없습니다.</p>";
+                        return;
+                    }
+
+                    const filtered = query
+                        ? items.filter(item => item.airport?.includes(query))
+                        : items;
+
+                    if (filtered.length === 0) {
+                        resultDiv.innerHTML = "<p>검색어와 일치하는 결과가 없습니다.</p>";
+                        return;
+                    }
+
+                    filtered.forEach(item => {
+                        const div = document.createElement("div");
+                        div.className = "item";
+                        div.innerHTML = `
+                            <strong>게이트명:</strong> ${item.gateId}<br>
+                            <strong>터미널명:</strong> ${item.terminalId}<br>
+                            <strong>대기 인원:</strong> ${item.waitTime}<br>
+                            <strong>대기 시간:</strong> ${item.waitLength}
+                        `;
+                        resultDiv.appendChild(div);
+                    });
+                })
+                .catch((error) => {
+                    console.error("API 호출 오류:", error);
+                    resultDiv.innerHTML = "<p>데이터를 불러오는 중 오류가 발생했습니다.</p>";
+                });
+        });
+    </script>
+</body>
+</html>

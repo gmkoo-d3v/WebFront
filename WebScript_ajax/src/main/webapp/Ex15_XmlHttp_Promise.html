@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Promise를 활용한 비동기 요청</title>
+  <style>
+    .post {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+    }
+    .post h3 {
+      margin: 0 0 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>게시글 목록</h2>
+  <button id="loadBtn">불러오기</button>
+  <div id="postList"></div>
+
+  <script>
+    // XMLHttpRequest를 Promise로 감싼 함수
+    function getPosts() {
+      return new Promise(function(resolve, reject) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "https://jsonplaceholder.typicode.com/posts", true);
+
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+              resolve(JSON.parse(xhr.responseText));
+            } else {
+              reject("데이터 로딩 실패: " + xhr.status);
+            }
+          }
+        };
+
+        xhr.send();
+      });
+    }
+
+    document.getElementById("loadBtn").addEventListener("click", function() {
+      const container = document.getElementById("postList");
+      container.innerHTML = "불러오는 중...";
+
+      getPosts()
+        .then(posts => {
+          container.innerHTML = ""; // 초기화
+          posts.slice(0, 5).forEach(post => { // 처음 5개만 표시
+            const div = document.createElement("div");
+            div.className = "post";
+            div.innerHTML = `<h3>${post.title}</h3><p>${post.body}</p>`;
+            container.appendChild(div);
+          });
+        })
+        .catch(error => {
+          container.innerHTML = `<p style="color:red;">${error}</p>`;
+        });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>JSONPlaceholder CRUD</title>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: 20px auto; }
+    .post { border: 1px solid #ccc; padding: 10px; margin: 10px 0; border-radius: 5px; }
+    input, button { margin: 5px 0; }
+    .actions button { margin-right: 5px; }
+  </style>
+</head>
+<body>
+
+  <h2>📝 게시글 관리 (CRUD)</h2>
+
+  <div>
+    <input type="text" id="titleInput" placeholder="제목 입력" />
+    <input type="text" id="bodyInput" placeholder="내용 입력" />
+    <button onclick="createPost()">게시글 추가</button>
+  </div>
+
+  <hr>
+  <h3> 게시글 목록</h3>
+  <div id="posts"></div>
+
+  <script>
+    const API_URL = "https://jsonplaceholder.typicode.com/posts";
+
+    //  게시글 목록 불러오기 (READ)
+    async function loadPosts() {
+      const res = await fetch(`${API_URL}?_limit=5`);
+      const data = await res.json();
+      const container = document.getElementById("posts");
+      container.innerHTML = "";
+
+      data.forEach(post => {
+        const div = document.createElement("div");
+        div.className = "post";
+        div.innerHTML = `
+          <h4>${post.title}</h4>
+          <p>${post.body}</p>
+          <div class="actions">
+            <button onclick="editPost(${post.id})">수정</button>
+            <button onclick="deletePost(${post.id})">삭제</button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    // ✅ 게시글 추가 (CREATE)
+    async function createPost() {
+      const title = document.getElementById("titleInput").value;
+      const body = document.getElementById("bodyInput").value;
+
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, body, userId: 1 })
+      });
+
+      const data = await res.json();
+      alert("추가된 게시글 ID: " + data.id);
+      loadPosts(); // 새로고침
+    }
+
+    //  게시글 수정 (UPDATE)
+    async function editPost(id) {
+      const newTitle = prompt("새 제목을 입력하세요");
+      if (!newTitle) return;
+
+      await fetch(`${API_URL}/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title: newTitle })
+      });
+
+      alert("게시글이 수정되었습니다.");
+      loadPosts();
+    }
+
+    //  게시글 삭제 (DELETE)
+    async function deletePost(id) {
+      if (!confirm("정말 삭제하시겠습니까?")) return;
+
+      await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+      alert("삭제되었습니다.");
+      loadPosts();
+    }
+
+    // 페이지 로드 시 목록 불러오기
+    loadPosts();
+  </script>
+
+</body>
+</html>

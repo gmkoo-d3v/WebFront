@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+<body>
+<h1>대구 맛집 정보</h1>
+
+<button id="loadBtn">목록 조회</button>
+
+<label>
+	<select id="categorySelect">
+		<option value="all">전체</option>
+	</select>
+</label>
+
+<ul id="restaurantList"></ul>
+
+</body>
+
+<script type="text/javascript">
+
+	let allData = [];
+
+	//카테고리 목록 만들기
+	/*
+	function buildCategories(data) {
+	   const categories = [];
+	   for (let i = 0; i < data.length; i++) {
+		  const categorie = data[i].FD_CS;
+		  if (categorie && categories.indexOf(categorie) === -1) {
+			 categories.push(categorie);
+		  }
+	   }
+	   return categories;
+	}
+	*/
+
+	function buildCategories(data) {
+		const set = new Set();
+		for (let i = 0; i < data.length; i++) {
+			const c = data[i].FD_CS;
+			if (c) set.add(c);
+		}
+		return [...set];
+	}
+
+	//선택 옵션 추가
+	function fillCategoryOptions(selectEl, categories) {
+		for (let j = 0; j < categories.length; j++) {
+			const opt = document.createElement('option');
+			opt.value = categories[j];
+			opt.textContent = categories[j];
+			selectEl.appendChild(opt);
+		}
+	}
+
+	//리스트 출력
+	function renderList(items) {
+		const ul = document.getElementById('restaurantList');
+		ul.innerHTML = '';
+		if (!items || !items.length) {
+			ul.innerHTML = '<li>표시할 항목이 없음.</li>';
+			return;
+		}
+		for (let k = 0; k < items.length; k++) {
+			const it = items[k];
+			const name = it.BZ_NM;
+			const categorie = it.FD_CS;
+			const hour = it.MBZ_HR;
+			const desc = it.SMPL_DESC;
+			const li = document.createElement('li');
+			li.innerHTML = '<b>' + name + '</b> (' + categorie + ') - ' + hour + '<br>' + desc;
+			ul.appendChild(li);
+		}
+	}
+
+	//필터링
+	function onCategoryChange(event) {
+		const selected = event.target.value;
+		let result = [];
+
+		if (selected === 'all') {
+			result = allData;
+		} else {
+			for (let i = 0; i < allData.length; i++) {
+				const item = allData[i];
+				if (item.FD_CS === selected) {
+					result.push(item);
+				}
+			}
+		}
+		renderList(result);
+	}
+
+
+	const select = document.getElementById('categorySelect');
+
+	function loadData() {
+
+		fetch('daegufood.json')
+				.then(response => response.json())
+				.then(daegufood => {
+					//console.log(daegufood);
+					//console.log(daegufood.data);
+					//console.log(daegufood.data[0]);
+					console.log(daegufood.data[0].BZ_NM); //이름
+					console.log(daegufood.data[0].FD_CS); //카테고리
+					console.log(daegufood.data[0].MBZ_HR); //영업시간
+					console.log(daegufood.data[0].SMPL_DESC); //설명
+
+					//목표: 카테고리별로 맛집 목록 보여주기!!
+
+					allData = Array.isArray(daegufood.data) ? daegufood.data : [];
+
+					//카테고리 목록
+					const categories = buildCategories(allData);
+
+					//선택 옵션
+					fillCategoryOptions(select, categories);
+
+					//렌더
+					renderList(allData);
+
+					//이벤트 바인딩
+					select.addEventListener('change', onCategoryChange);
+				})
+				.catch(error => {
+					console.error('Error fetching or parsing JSON:', error);
+					document.getElementById('restaurantList').innerHTML = '<li>실패</li>';
+				});
+
+	}
+
+	document.getElementById("loadBtn").addEventListener("click", loadData);
+
+</script>
+
+</html>

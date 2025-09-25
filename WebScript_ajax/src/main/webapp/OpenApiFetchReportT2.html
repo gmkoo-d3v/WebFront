@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>따릉이 거치대 랭크 (초보자 버전)</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f5f7fa; margin:0; padding:20px; color:#333; }
+    h1 { text-align:center; margin-bottom:20px; color:#2c3e50; }
+    .rank-table { max-width:700px; margin:0 auto; border-collapse:collapse; width:100%; background:#fff; }
+    .rank-table th, .rank-table td { padding:12px 15px; text-align:left; border-bottom:1px solid #ddd; }
+    .rank-table th { background:#3498db; color:#fff; }
+    .highlight { color:#e74c3c; font-weight:bold; }
+    .center { text-align:center; margin-top:16px; }
+  </style>
+</head>
+<body>
+  <h1>🚲 따릉이 거치대 수 Top 10</h1>
+
+  <table class="rank-table">
+    <thead>
+      <tr>
+        <th>순위</th>
+        <th>거치대수</th>
+        <th>주소</th>
+      </tr>
+    </thead>
+    <tbody id="rank-body">
+      <!-- 여기로 행이 추가됩니다 -->
+    </tbody>
+  </table>
+
+  <p class="center">
+    <button type="button" onclick="loadData()">데이터 불러오기</button>
+  </p>
+
+  <script>
+  function loadData() {
+    var tbody = document.getElementById('rank-body');
+    tbody.innerHTML = '<tr><td colspan="3">불러오는 중...</td></tr>';
+
+    var url = 'http://openapi.seoul.go.kr:8088/6a526d6d5363686936327645464564/json/tbCycleStationInfo/1/1000/';
+
+    fetch(url)
+      .then(function(res){ return res.json(); })
+      .then(function(json){
+        var rows = (json && json.stationInfo && json.stationInfo.row) ? json.stationInfo.row : [];
+
+        // 거치대 수 내림차순으로 정렬
+        rows.sort(function(a,b){ return Number(b.HOLD_NUM) - Number(a.HOLD_NUM); });
+
+        tbody.innerHTML = '';
+
+        var rank = 0;         
+        var prevHold = null;   
+        var printed = 0;       
+
+        for (var i = 0; i < rows.length; i++) {
+          var hold = Number(rows[i].HOLD_NUM);
+
+          // 이전 값과 다를 때만 등수 +1
+          if (prevHold === null || hold !== prevHold) {
+            rank = rank + 1;
+          }
+
+
+          var tr = document.createElement('tr');
+
+          var tdRank = document.createElement('td');
+          tdRank.textContent = rank;
+          tr.appendChild(tdRank);
+
+          var tdHold = document.createElement('td');
+          var span = document.createElement('span');
+          span.className = 'highlight';
+          span.textContent = rows[i].HOLD_NUM;
+          tdHold.appendChild(span);
+          tr.appendChild(tdHold);
+
+          var tdAddr = document.createElement('td');
+          var addr1 = rows[i].STA_ADD1 ? rows[i].STA_ADD1 : '';
+          var addr2 = rows[i].STA_ADD2 ? rows[i].STA_ADD2 : '';
+          tdAddr.textContent = (addr1 + ' ' + addr2).trim();
+          tr.appendChild(tdAddr);
+
+          tbody.appendChild(tr);
+
+          // 다음 비교를 위해 현재 값을 이전 값으로 저장
+          prevHold = hold;
+
+          printed++;
+          if (printed >= 10) break; 
+        }
+
+        if (rows.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="3">데이터가 없습니다.</td></tr>';
+        }
+      })
+      .catch(function(err){
+        console.log(err);
+        tbody.innerHTML = '<tr><td colspan="3">불러오기 실패</td></tr>';
+      });
+  }
+</script>
+
+</body>
+</html>
